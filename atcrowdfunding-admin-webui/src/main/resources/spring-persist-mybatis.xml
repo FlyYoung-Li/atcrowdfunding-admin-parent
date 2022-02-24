@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mybatis-spring="http://mybatis.org/schema/mybatis-spring"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://mybatis.org/schema/mybatis-spring http://mybatis.org/schema/mybatis-spring.xsd">
+    <context:property-placeholder location="classpath:jdbc.properties"/>
+
+    <!--配置数据源-->
+    <bean id="datasource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driverClassName" value="${driverClassName}"/>
+        <property name="url" value="${url}"/>
+        <property name="username" value="${user}"/>
+        <property name="password" value="${password}"/>
+    </bean>
+
+    <!--配置sqlSessionFactory-->
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="mapperLocations" value="classpath:mapper/*Mapper.xml"/>
+        <property name="dataSource" ref="datasource"/>
+        <property name="configLocation" value="classpath:mybatis-config.xml"/>
+        <!--配置插件-->
+        <property name="plugins" >
+            <array>
+                <!--配置pageHelper插件-->
+                <bean class="com.github.pagehelper.PageHelper">
+                    <property name="properties">
+                        <props>
+                            <!--配置数据库方言，告诉PageHelper当前使用的数据库-->
+                            <prop key="dialect">mysql</prop>
+                            <!--配置页码的合理化修正，在1-总页码之间进行修正-->
+                            <prop key="reasonable">true</prop>
+                        </props>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+    <!--将BCryptPasswordEncoder注入ioc容器中，供spring容器在service中注入使用-->
+    <bean id="bCryptPasswordEncoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+    <!--将webSecurityExpressionHandlersecurity的表达式处理器注入spring的ioc容器中-->
+<!--    <bean id="webSecurityExpressionHandler"-->
+<!--          class="org.springframework.security.web.access.expression.DefaultWebSecurityExpressionHandler"/>-->
+
+<!--    <bean id="springSecurityFilterChain" class="org.springframework.web.filter.DelegatingFilterProxy"></bean>-->
+<!--    <bean id="webAppSecurityConfig" class="com.crowd.mvc.security.WebAppSecurityConfig"></bean>-->
+
+
+    <!--老糊涂了，扫描的是接口，而不是实体类-->
+    <mybatis-spring:scan base-package="com.crowd.mapper"></mybatis-spring:scan>
+</beans>

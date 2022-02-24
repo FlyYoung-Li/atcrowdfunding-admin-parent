@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!--开启组件扫描，原来规定扫描哪些注解，其实也可规定扫描具体的包，只要保证具体包下的类都是@servcie类就可-->
+    <context:component-scan base-package="com.crowd.service"></context:component-scan>
+    <!--配置事务管理器(这里导入了spring-persist-mybatis中的数据源)-->
+    <bean id="txManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="datasource"/>
+    </bean>
+    <!--方法一：开启事务的注解驱动，主要是在tx包下的-->
+    <tx:annotation-driven transaction-manager="txManager"></tx:annotation-driven>
+
+
+
+    <!--方法二：配置下之前的事务控制-->
+    <!--配置事务切面-->
+    <!--<aop:config>
+        <aop:pointcut id="txPointcut" expression="execution( * *..*Service.*(..))"/>
+        <aop:advisor advice-ref="txAdvice" pointcut-ref="txPointcut"/>
+    </aop:config>-->
+    <!--配置事务通知-->
+    <!--<tx:advice id="txAdvice" transaction-manager="txManager">
+        &lt;!&ndash;配置事务属性&ndash;&gt;
+        <tx:attributes>
+            &lt;!&ndash;查询方法：配置只读属性&ndash;&gt;
+            <tx:method name="get*" read-only="true"/>
+            <tx:method name="find*" read-only="true"/>
+            <tx:method name="query*" read-only="true"/>
+            <tx:method name="count*" read-only="true"/>
+            &lt;!&ndash;增删改方法：传播行为，回滚异常&ndash;&gt;
+            <tx:method name="save*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+            <tx:method name="update*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+            <tx:method name="remove*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+            <tx:method name="batch*" propagation="REQUIRES_NEW" rollback-for="java.lang.Exception"/>
+        </tx:attributes>
+    </tx:advice>-->
+</beans>

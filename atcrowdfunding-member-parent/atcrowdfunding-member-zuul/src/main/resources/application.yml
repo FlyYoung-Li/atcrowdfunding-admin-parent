@@ -1,0 +1,36 @@
+server:
+  port: 80
+
+spring:
+  application:
+    name: crowdfunding-zuul
+  redis:
+    host: 192.168.49.128
+  session:
+    store-type: redis
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka/
+#路由设置
+zuul:
+  ignored-services: "*"  #忽略原本微服务名称
+  sensitive-headers: "*" #在zuul向其他微服务重定向的时候，还能保证原来的头信息
+
+  routes:               #自定义路由规则
+    portal:             #自定义路由规则名称（这里可以定义多个路由规则）
+      serviceId: crowdfunding-authenticaton-consumer #针对这个微服务自定义路由规则
+      path: /**                                      #通过/去访问这个微服务
+    project:
+      serviceId: crowdfunding-project-consumer
+      path: /project/**
+    order:
+      serviceId: crowdfunding-order-consumer
+      path: /order/**
+    pay:
+      serviceId: crowdfunding-pay-consumer
+      path: /pay/**
+ribbon:
+  ReadTimeout: 15000  #响应超时10秒
+  ConnectTimeout: 10000 #连接超时10秒

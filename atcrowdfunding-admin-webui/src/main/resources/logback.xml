@@ -1,0 +1,22 @@
+<?xml version="1.0"  encoding="utf-8"?>
+<configuration debug="true">
+    <!--指定日志输出的位置-->
+    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder>
+            <!--日志输出的格式-->
+            <pattern>
+                <!--时间 日志界别 线程名称 打印日志的类 日志主体内容 换行-->
+                [%d{HH:mm:ss.SSS}] [%-5level] [%thread] [%logger] [%msg]%n
+            </pattern>
+        </encoder>
+    </appender>
+    <!--设置日志级别，日志级别按顺序分别是：DEBUG、INFO、WARN、ERROR-->
+    <!--指定任意一个级别，只打印当前级别和后面级别的日志-->
+        <!--指定打印日志的appender，这里通过"STDOUT"引用前面的appender-->
+    <root level="INFO">
+        <appender-ref ref="STDOUT"/>
+    </root>
+
+    <!--根据特殊需要指定局部日志级别-->
+    <logger name="com.crowd.mapper" level="DEBUG"/>
+</configuration>

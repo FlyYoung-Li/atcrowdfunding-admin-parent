@@ -1,0 +1,29 @@
+server:
+  port: 5000
+
+spring:
+  application:
+    name: crowdfunding-project-consumer
+  session:
+    store-type: redis
+  redis:
+    host: 192.168.49.128
+  thymeleaf:
+    suffix: .html
+    prefix: classpath:/templates/
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka
+
+aliyun:
+  oss:
+    bucket-name: my-bucket21112
+    access-key-id: LTAI5tE5sj3oSKYjKd1ywYpP
+    access-key-secret: 9z2vzzVnlM6kHaprDW6asr0yhaARGf
+    bucket-domain: my-bucket21112.oss-cn-hangzhou.aliyuncs.com
+    endpoint: oss-cn-hangzhou.aliyuncs.com
+
+
+

@@ -1,0 +1,30 @@
+server:
+  port: 4000
+
+spring:
+  application:
+    name: crowdfunding-authenticaton-consumer
+  thymeleaf:
+    prefix: classpath:/templates/
+    suffix: .html
+    cache: false
+  redis:
+    host: 192.168.49.128
+  session:
+    store-type: redis
+
+eureka:
+  client:
+    service-url:
+      defaultZone: http://localhost:1000/eureka/
+
+short:
+  message:
+    host: https://dfsns.market.alicloudapi.com
+    path: /data/send_sms
+    method: POST
+    appcode: cba5876432a3491c892bcaa7138f0823
+    templateId:  TPL_0001
+
+
+

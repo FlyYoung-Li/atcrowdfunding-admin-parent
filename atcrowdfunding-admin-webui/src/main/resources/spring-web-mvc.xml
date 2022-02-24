@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+    <!--配置组件扫描的包-->
+    <context:component-scan base-package="com.crowd.mvc"/>
+    <!--动态资源，静态资源-->
+    <mvc:annotation-driven/>
+    <mvc:default-servlet-handler/>
+    <!--配置视图解析器-->
+    <bean id="rs" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/pages/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!--基于xml方式配置异常映射机制-->
+    <bean id="SimpleMappingExceptionResolver" class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <props>
+                <prop key="java.lang.Exception">system-error</prop>
+            </props>
+        </property>
+    </bean>
+    <mvc:view-controller path="admin/get.html" view-name="admin-login"></mvc:view-controller>
+    <mvc:view-controller path="/admin/to/main/page.html" view-name="admin-main"></mvc:view-controller>
+    <mvc:view-controller path="/admin/to/add/page.html" view-name="admin-add"></mvc:view-controller>
+    <mvc:view-controller path="/role/to/page.html" view-name="role-page"></mvc:view-controller>
+    <mvc:view-controller path="/menu/to/page.html" view-name="menu-page"></mvc:view-controller>
+    <mvc:view-controller path="/admin/to/login/page.html" view-name="admin-login"></mvc:view-controller>
+
+    <!--注册拦截器-->
+   <!-- <mvc:interceptors>
+        <mvc:interceptor>
+            &lt;!&ndash;表示拦截项目下的所有请求&ndash;&gt;
+            <mvc:mapping path="/**"></mvc:mapping>
+            &lt;!&ndash;表示不去拦截的请求：主要是在执行请求之前看session域中是否有Admin对象&ndash;&gt;
+                &lt;!&ndash;view-Controller中的请求，跳转到登录页面，肯定没有Admin对象&ndash;&gt;
+            <mvc:exclude-mapping path="/admin/to/login/page.html"/>
+                &lt;!&ndash;请求映射方法中登录请求，之前进行判断的话，肯定没有Admin对象&ndash;&gt;
+            <mvc:exclude-mapping path="/admin/do/login.html"/>
+            &lt;!&ndash;表示使用我们自己的拦截器&ndash;&gt;
+            <bean class="com.crowd.mvc.interceptor.LoginInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>-->
+
+</beans>
