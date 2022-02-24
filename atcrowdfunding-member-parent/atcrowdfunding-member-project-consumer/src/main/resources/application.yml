@@ -20,8 +20,8 @@ eureka:
 aliyun:
   oss:
     bucket-name: my-bucket21112
-    access-key-id: LTAI5tE5sj3oSKYjKd1ywYpP
-    access-key-secret: 9z2vzzVnlM6kHaprDW6asr0yhaARGf
+    access-key-id: 
+    access-key-secret: 
     bucket-domain: my-bucket21112.oss-cn-hangzhou.aliyuncs.com
     endpoint: oss-cn-hangzhou.aliyuncs.com
 
